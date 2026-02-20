@@ -1,0 +1,5 @@
+#!/bin/bash
+
+df -h > ~/tmp/popup.inf
+mcview ~/tmp/popup.inf
+#read a

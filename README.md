@@ -1,2 +1,4 @@
-# xmonad
-Xmonad configuration and scripts
+xmonad, xmobar settings
+
+some scripts
+

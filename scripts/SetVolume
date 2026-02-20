@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [$CURRENT_VOLUME eq ""]; then
+    CURRENT_VOLUME=`pactl list sinks | grep 'Base Volume' | awk '{printf "%d", $5}'`
+    export CURRENT_VOLUME
+fi
+
+VOLUME=`expr ${CURRENT_VOLUME} + ${1}`
+
+echo "type=bar,service=volume,geometry=+20+30,width=500,height=50,duration=3,fg=0f0,bg=000,bd=090,tc=ff0000,percent=${VOLUME}|" | nc localhost 7779 &
+
+#pactl set-sink-mute @DEFAULT_SINK@ false 
+pactl set-sink-volume @DEFAULT_SINK@ ${VOLUME}%
+
+

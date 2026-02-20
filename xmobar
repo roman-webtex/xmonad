@@ -1,0 +1,33 @@
+Config {font = "xft:Terminus-12"
+, additionalFonts = [ 
+                        "xft:FontAwesome:pixelsize=12"
+                      , "xft:Monospace:pixelsize=8:style=Bold" 
+                      , "xft:Terminus-12" 
+                    ]
+, borderColor = "black"
+, border = FullB
+, bgColor = "black"
+, fgColor = "gray"
+, alpha = 200
+, position = Top
+, textOffset = 0
+, iconOffset = 1
+, lowerOnStart = True
+, pickBroadest = False
+, persistent = False
+, hideOnStart = False
+, iconRoot = "."
+, allDesktops = True
+, overrideRedirect = True
+, textOutputFormat = Ansi
+, commands = [ Run Network "wlx5ce9312df032"  ["-t","<fn=1>\61931</fn> ⇑<tx>kB/s|⇓<rx>kB/s", "-L","0","-H","120","--normal","green","--high","red"] 10
+             , Run Cpu               ["-t","<fn=1>\62171</fn> <total>%","-L","3","-H","50","--normal","green","--high","red"] 10
+             , Run Memory            ["-t","<fn=1>\61837</fn> <usedratio>%"] 10
+             , Run Date "%a %d/%m/%Y %X" "date" 10
+             , Run Kbd               [ ("us" , "<fn=1>\61724</fn><fn=3><fc=green> US</fc></fn>"), ("ua", "<fn=1>\61724</fn><fn=3><fc=white> UA</fc></fn>")]
+             , Run StdinReader
+             ]
+, sepChar = "%"
+, alignSep = "}{"
+, template = "%StdinReader%}{ <action=`./scripts/TopToggle` button=1>%cpu%</action> | <action=`./scripts/MemToggle` button=1><action=`./scripts/DfToggle` button=3>%memory%</action></action> | <action=`tclsh netmanag.tcl` button=1>%wlx5ce9312df032%</action> | <action=`./scripts/CalToggle` button=1><action=`./scripts/CalMonthToggle` button=3><fc=#ee9a00>%date%</fc></action></action> | <action=`xdotool key Mode_switch` button=1>%kbd%</action> |"
+}

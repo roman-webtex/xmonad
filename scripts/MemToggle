@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PID=`ps aux | grep MemShow | grep -v grep | awk '{print $2}'`
+
+if [[ -n $PID ]]; then
+    kill $PID
+    exit 0
+else
+#    egrep 'Mem|Cache|Swap' /proc/meminfo | dzen2 -p -x "1950" -y "20" -w "250" -l "6" -sa 'c' -ta 'c' -fn "-*-terminus-*-r-bold-*-*-100-*-*-*-*-iso8859-*"\
+#         -e 'onstart=uncollapse;button1=exit;button3=exit' -title-name 'MemShow'
+
+    urxvtc -name MemShow -bd green -geometry 30x8 -e /home/roman/bin/MemShow 
+    exit 0
+fi
+
+
+

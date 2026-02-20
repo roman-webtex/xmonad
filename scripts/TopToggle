@@ -1,0 +1,14 @@
+#!/bin/bash
+
+PID=`ps aux | grep TopShow | grep -v grep | awk '{print $2}'`
+
+if [[ -n $PID ]]; then
+    kill $PID
+    exit 0
+else
+    urxvtc -name TopShow -bd green -geometry 80x43 -e /home/roman/bin/TopShow 
+    exit 0
+fi
+
+
+

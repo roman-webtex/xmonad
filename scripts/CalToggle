@@ -1,0 +1,17 @@
+#!/bin/bash
+
+PID=$(ps aux | grep CalShow | grep -v grep | awk '{print $2}')
+
+if [[ -n $PID ]]; then
+    kill $PID
+    exit 0
+else
+#    echo "`ncal -y`" | dzen2 -p -x "2085" -y "20" -w "470" -l "28" -sa 'c' -ta 'c' -fn "-*-terminus-medium-r-normal-*-*-100-*-*-*-*-iso8859-*"\
+#         -e 'onstart=uncollapse;button1=exit;button3=exit' -title-name 'CalShow'
+
+    urxvtc -name CalShow -bd green -geometry 75x32 -e /home/roman/bin/CalShow 
+    exit 0
+fi
+
+
+

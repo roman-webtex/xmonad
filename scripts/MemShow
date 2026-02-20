@@ -1,0 +1,5 @@
+#!/bin/bash
+
+egrep 'Mem|Cache' /proc/meminfo  > ~/tmp/popup.inf
+mcview ~/tmp/popup.inf
+#read a
