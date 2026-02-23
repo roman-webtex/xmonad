@@ -7,5 +7,5 @@ function run {
   fi
 }
 
-feh --no-xinerama --bg-center /home/..../wall/269413-4096x1743.jpg
+feh --no-xinerama --bg-center /home/roman/wall/269413-4096x1743.jpg
 

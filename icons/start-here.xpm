@@ -1,0 +1,35 @@
+/* XPM */
+static char *start_here[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 13 1 ",
+"  c None",
+". c gray87",
+"X c gray26",
+"o c gray68",
+"O c gray13",
+"+ c magenta",
+"@ c gray45",
+"# c black",
+"$ c gray39",
+"% c gray74",
+"& c yellow",
+"* c cyan",
+"= c white",
+/* pixels */
+"                ",
+"   ..X oooO   + ",
+"   @.X #XXO  .X ",
+" $$..X$%$%O$&X  ",
+" $$@.X$%%$O&X   ",
+" $............  ",
+" $.ooooooooooo  ",
+" $.ooo*&*&=ooo@ ",
+" $.oooOOOO=ooo$@",
+" $.ooo=====ooo$@",
+" $.ooooooooooo$@",
+" $.ooooooooooo$@",
+" $.ooooooooooo$@",
+"  .ooooooooooo$@",
+"  .$$$$$$$$$$$$@",
+"    @@@@@@@@@@@@"
+};

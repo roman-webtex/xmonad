@@ -1,0 +1,33 @@
+/* XPM */
+static char *media_flash[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 11 1 ",
+"  c None",
+". c gray45",
+"X c gray26",
+"o c gray39",
+"O c gray13",
+"+ c black",
+"@ c white",
+"# c red",
+"$ c #008000",
+"% c gray68",
+"& c gray87",
+/* pixels */
+"    ..XXXX..    ",
+"  oXXXXXXXXXXo  ",
+" XXXXooooooXXXX ",
+"oXXoXOOOOOOooXXX",
+"oXXOOXXXXXXXX.X+",
+"oXOX@@#$O$O$+.X+",
+"oXO@@@#.$O$X+.X+",
+"oXO++++++++++.X+",
+"oXO@@@@@@@@@@.X+",
+"oXO@@@@@@@@@@.X+",
+"oXO@@@@@@@@@@.X+",
+"oXO@@@@##@@@@.X+",
+"oXO%&@@@@@@&%.X+",
+"oXOX.%%%%%%.X.X+",
+"oXOXXXXXXXXXX.X+",
+" ++++++++++++++ "
+};

@@ -6,9 +6,7 @@ if [[ -n $PID ]]; then
     kill $PID
     exit 0
 else
-#    df -h | dzen2 -p -x "1950" -y "20" -w "600" -l "12" -sa 'l' -ta 'l' -fn "-*-terminus-*-r-bold-*-*-100-*-*-*-*-iso8859-*"\
-#         -e 'onstart=uncollapse;button1=exit;button3=exit' -title-name 'DfShow'
-    urxvtc -name DfShow -bd green -geometry 80x14 -e ./DfShow 
+    urxvtc -name DfShow -bd green -geometry 80x14 -e /home/roman/.xmonad/scripts/DfShow 
     exit 0
 fi
 

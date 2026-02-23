@@ -83,7 +83,7 @@ searchEngineMap method = M.fromList $
 
 main :: IO ()
 main = do
-    xmproc <- spawnPipe "/usr/bin/xmobar /home/...../.xmonad/xmobar"
+    xmproc <- spawnPipe "/usr/bin/xmobar /home/roman/.xmonad/xmobar"
     xmonad  $ docks def
         { layoutHook = myLayout }
         { manageHook = manageHook def <+> myManageHook <+> manageDocks
@@ -92,7 +92,7 @@ main = do
             , normalBorderColor  = "black"
             , workspaces         = myWorkspaces
             , layoutHook         = avoidStruts myLayout
-            , startupHook        = spawnOnce "feh --no-xinerama --bg-center /home/....../wall/269413-4096x1743.jpg"
+            , startupHook        = spawnOnce "feh --no-xinerama --bg-center /home/roman/Картинки/wall/269413-4096x1743.jpg"
             , logHook            = dynamicLogWithPP $ xmobarPP
                 {
                     ppOutput = hPutStrLn xmproc

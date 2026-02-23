@@ -6,7 +6,7 @@ if [[ -n $PID ]]; then
     kill $PID
     exit 0
 else
-    urxvtc -name TopShow -bd green -geometry 80x43 -e ./TopShow 
+    urxvtc -name TopShow -bd green -geometry 80x43 -e /home/roman/.xmonad/scripts/TopShow 
     exit 0
 fi
 
