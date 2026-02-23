@@ -1,13 +1,16 @@
 encoding system utf-8
-
 package require Tk
 
 proc umountDisk { name } {
+
     if {[string trim $name] != ""} {
         exec udiskie-umount $name
     }
     
-    tk_messageBox -message "USB flash" -detail "Пристрій можна забрати." -icon info
+    # tcl/tk messagebox
+    #tk_messageBox -message "USB flash" -detail "Пристрій можна забрати." -icon info
+    # unote message
+    exec echo "type=text,geometry=-10+20,padx=25,pady=25,duration=10,fg=fff,bg=5285cc,bd=000,tc=fff,text=|Пристрій можна витягнути" | nc localhost 7779 &
     exit
 }
 
