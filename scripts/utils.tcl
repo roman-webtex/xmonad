@@ -1,8 +1,6 @@
 package require Tk
-package require md5
 package require apave
 package require uuid
-
 
 foreach font_name [font names] {
     font configure $font_name -size 8
@@ -95,6 +93,41 @@ proc changeNet { ssid secur active} {
         }
     }
     exit
+}
+
+proc creaNetWindow {} {
+    set fp [open /tmp/connection.tmp]
+    set data [read $fp]
+    close $fp
+    #file delete /tmp/connection.tmp
+    set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/kgpg.png]]
+    
+    foreach child [pack slaves $::window_name] {
+        if {$child != "$::window_name.title"} {
+            pack forget $child
+            destroy $child
+        }
+    }
+
+    foreach line [split $data "\n"] {
+        set parts [split $line ">"]
+        if {[lindex $parts 0] != "IN-USE"} {
+            set active [lindex $parts 0]
+            set SSID [lindex $parts 2]
+            set GRAPH [lindex $parts 8]
+            set PROC [lindex $parts 7]
+            set SECUR [lindex $parts 9]
+            if {$active == ""} {
+                set active " "
+            }
+            if {[string trim $SSID] != ""} {
+                pack [ttk::button $::window_name.lbl_$SSID -text [format "%-5s %-20s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
+                if {[string trim $SECUR] != ""} {
+                    $::window_name.lbl_$SSID configure -image $imgSecur -compound right
+                }
+            }
+        }
+    }
 }
 
 proc padAll {text length {fill " "} } {
