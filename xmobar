@@ -1,8 +1,7 @@
-Config {font = "xft:Terminus-12"
+Config {font = "xft:Terminus-10"
 , additionalFonts = [ 
                         "xft:FontAwesome:pixelsize=12"
-                      , "xft:Monospace:pixelsize=8:style=Bold" 
-                      , "xft:Terminus-12" 
+                      , "xft:FreeMono:pixelsize=8" 
                     ]
 , borderColor = "black"
 , border = FullB
@@ -26,7 +25,7 @@ Config {font = "xft:Terminus-12"
              , Run Cpu             ["-t","","-L","3","-H","50","--normal","green","--high","red"] 10
              , Run Memory          ["-t",""] 10
              , Run Date "%a %d/%m/%Y %X" "date" 10
-             , Run Kbd             [ ("us" , "<fn=1>\9000</fn><fc=green> US</fc>"), ("ua", "<fn=1>\9000</fn><fc=white> UA</fc>")]
+             , Run Kbd             [ ("us" , "<fn=1>\9000</fn><fc=green> ENG</fc>"), ("ua", "<fn=1>\9000</fn><fc=white> УКР</fc>")]
              , Run StdinReader
              ]
 , sepChar = "%"

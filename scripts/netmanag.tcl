@@ -1,59 +1,20 @@
 encoding system utf-8
-package require Tk
-package require apave
+
+set ::workingDir [file dirname [file dirname [file normalize [info script]]]]
+set ::imgSize 16
 set ::password ""
+source $::workingDir/scripts/utils.tcl
 
-proc changeNet { ssid secur} {
-    if {[string trim $ssid] != ""} {
-        if {[file exists /etc/NetworkManager/system-connections/[string trim $ssid].nmconnection]} {
-            catch {[exec nmcli connection up [string trim "$ssid"]] errorMessage}
-        } elseif {[string trim $secur] != ""} {
-            apave::APave create pave
-            pave csSet -2 .
-            set loginFrame .loginFrame
-            set content {
-                {fra  - - - - {-st news -padx 5 -pady 5}}
-                {fra.lab2 - - 1 1 {-st es}  {-t "Пароль: "}}
-                {fra.ent2 fra.lab2 L 1 9 {-st wes} {-tvar ::password }}
-                {fra.seh1 fra.lab2 T 1 10 }
-                {fra.butOk fra.seh1 T 1 5 {-st es} {-t "Ok" -com "pave res $loginFrame 1"}}
-                {fra.butCancel fra.butOk L 1 5 {-st wes} {-t "Відміна" -com "pave res $loginFrame 0"}}
-            }
-            pave makeWindow $loginFrame "Вхід"
-            pave paveWindow $loginFrame $content
-            focus $loginFrame
-            grab $loginFrame
-            set res [pave showModal $loginFrame -focus .loginFrame.fra.ent2]
-            destroy $loginFrame
-            destroy pave
+set ::window_name ".[::md5::md5 [info script]]"
 
-            if {[string trim $res] == 0} {
-                exit
-            }
-            catch {[exec nmcli dev wifi connect [string trim "$ssid"] password "$::password"] errorMessage}
-        } else {
-            catch {[exec nmcli connection up [string trim "$ssid"]] errorMessage}
-        }
-    }
-    exit
-}
-
-foreach font_name [font names] {
-    font configure $font_name -size 8
-}
-
-wm withdraw .
-set ::nmmenu [menu .nmPopup -tearoff 0]
-
-$::nmmenu add command -label "Мережеві підключення" 
-tk_popup $::nmmenu 500 100
-update
+::setWindowLabel "Мережеві підключення"
 
 exec nmcli dev wifi | sed -E "s/(\[\[:space:\]\]+)/>/g" > /tmp/connection.tmp
 set fp [open /tmp/connection.tmp]
 set data [read $fp]
 close $fp
 file delete /tmp/connection.tmp
+set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/kgpg.png]]
 
 foreach line [split $data "\n"] {
     set parts [split $line ">"]
@@ -62,12 +23,14 @@ foreach line [split $data "\n"] {
         set SSID [lindex $parts 2]
         set GRAPH [lindex $parts 8]
         set PROC [lindex $parts 7]
-        set SECUR "[lindex $parts 9] [lindex $parts 10]"
+        set SECUR [lindex $parts 9]
+        if {$active == ""} {
+            set active " "
+        }
         if {[string trim $SSID] != ""} {
-            if {$active == "*"} {
-                $::nmmenu add command -label [format "%-5s %-15s %-8s %-12s" $active $SSID $GRAPH $SECUR] 
-            } else {
-                $::nmmenu add command -label [format "%-5s %-15s %-8s %-12s" $active $SSID $GRAPH $SECUR] -command [list ::changeNet $SSID $SECUR]
+            pack [ttk::button $::window_name.lbl_$SSID -text [format "%-5s %-20s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
+            if {[string trim $SECUR] != ""} {
+                $::window_name.lbl_$SSID configure -image $imgSecur -compound right
             }
         }
     }

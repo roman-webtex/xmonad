@@ -1,23 +1,11 @@
 encoding system utf-8
-package require Tk
-package require uuid
 
 set ::workingDir [file dirname [file dirname [file normalize [info script]]]]
 set ::imgSize 16
-
-proc runProg { name } {
-    if {[string trim $name] != ""} {
-        catch {[exec $name] errorMessage}
-    }
-    exit
-}
-
-foreach font_name [font names] {
-    font configure $font_name -size 8
-}
+source $::workingDir/scripts/utils.tcl
 
 wm withdraw .
-set ::appmenu [menu .appPopup -tearoff 0 -relief flat]
+set ::appmenu [menu .appPopup -tearoff 0 -relief flat -background $::menuBackground -foreground $::menuForeground]
 
 set fp [open $::workingDir/appmenu]
 set data [read $fp]
