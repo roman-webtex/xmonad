@@ -1,12 +1,13 @@
 Terminal:urxvt:utilities-terminal.png
 Nemo:nemo:system-file-manager.png
 
-Google Chrome:google-chrome:google-chrome_32.png
+Google Chrome:google-chrome:google-chrome.png
 
 Office:/opt/libreoffice26.2/program/soffice:lx03162.png
 Office Calc:/opt/libreoffice26.2/program/scalc:ots.png
 Office Writer:/opt/libreoffice26.2/program/swriter:odt.png
 TexStudio:texstudio.AppImage:accessories-text-editor.png
-
 Scribus:scribus:scribus.png
+
 Gimp:gimp:gimp-wilber.png
+Inkscape:Inkscape.AppImage:inkscape.png

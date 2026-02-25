@@ -9,9 +9,3 @@ set ::window_name ".[::uuid::uuid generate]"
 
 set fp [open "| mount -l | awk \"{ print \$3 }\""]
 fileevent $fp readable [list ::handleFileEvent $fp "::creaDriveWindow"]
-
-
-
-
-
-

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DISK=$( mount | grep media | awk '{ print $3 }' )
+
+if [[ $DISK ]]; then
+    echo "  "
+fi
+

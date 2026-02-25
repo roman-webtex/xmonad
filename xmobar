@@ -6,8 +6,8 @@ Config {font = "xft:Terminus-10"
 , borderColor = "black"
 , border = FullB
 , bgColor = "black"
-, fgColor = "gray"
-, alpha = 200
+, fgColor = "#9e9e9e"
+, alpha = 128
 , position = Top
 , textOffset = 0
 , iconOffset = -1
@@ -20,15 +20,16 @@ Config {font = "xft:Terminus-10"
 , overrideRedirect = True
 , textOutputFormat = Ansi
 , verbose = True
-, commands = [ Run Network "wlx5ce9312df032"  ["-t"," <fn=1>\61931</fn>"] 10
-             , Run Network "eno1"  ["-t"," <fn=1>\61672</fn>"] 10
+, commands = [ Run Network "wlx5ce9312df032"  ["-t"," <fn=1>\61931</fn>"] 100
+             , Run Network "eno1"  ["-t"," <fn=1>\61672</fn>"] 100
              , Run Cpu             ["-t","","-L","3","-H","50","--normal","green","--high","red"] 10
              , Run Memory          ["-t",""] 10
-             , Run Date "%a %d/%m/%Y %X" "date" 10
+             , Run Com "date" ["+%a %d/%m/%Y %X"] "date" 10
              , Run Kbd             [ ("us" , "<fn=1>\9000</fn><fc=green> ENG</fc>"), ("ua", "<fn=1>\9000</fn><fc=white> УКР</fc>")]
+             , Run Com "/home/roman/.xmonad/scripts/CheckMnt" [""] "mnt" 50
              , Run StdinReader
              ]
 , sepChar = "%"
 , alignSep = "}{"
-, template = "<action=`tclsh ~/.xmonad/scripts/startmenu.tcl`><icon=app-menu.xpm/></action> %StdinReader%}{<action=`~/.xmonad/scripts/TopToggle` button=1><icon=comp.xpm/>%cpu%</action> <action=`~/.xmonad/scripts/MemToggle` button=1><action=`~/.xmonad/scripts/DfToggle` button=3><icon=memory.xpm/>%memory%</action></action> <action=`tclsh ~/.xmonad/scripts/usbdev.tcl`><icon=removable-flash.xpm/></action> <action=`tclsh ~/.xmonad/scripts/netmanag.tcl` button=1><icon=nm-device.xpm/></action>%wlx5ce9312df032% <action=`~/.xmonad/scripts/CalToggle` button=1><action=`~/.xmonad/scripts/CalMonthToggle` button=3><fc=#ee9a00>%date%</fc></action></action> <action=`xdotool key Mode_switch` button=1>%kbd%</action> "
+, template = "<action=`tclsh ~/.xmonad/scripts/startmenu.tcl`><icon=app-menu.xpm/></action> %StdinReader%}{<action=`~/.xmonad/scripts/TopToggle` button=1><icon=comp.xpm/>%cpu%</action> <action=`~/.xmonad/scripts/MemToggle` button=1><action=`~/.xmonad/scripts/DfToggle` button=3><icon=memory.xpm/>%memory%</action></action> <action=`tclsh ~/.xmonad/scripts/usbdev.tcl`><fn=1>%mnt%</fn></action><action=`tclsh ~/.xmonad/scripts/netmanag.tcl` button=1><icon=nm-device.xpm/></action>%wlx5ce9312df032% <action=`~/.xmonad/scripts/CalToggle` button=1><action=`~/.xmonad/scripts/CalMonthToggle` button=3><fc=#ee9a00>%date%</fc></action></action> <action=`xdotool key Mode_switch` button=1>%kbd%</action> "
 }

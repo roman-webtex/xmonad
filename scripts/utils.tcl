@@ -8,7 +8,6 @@ foreach font_name [font names] {
 
 set ::fg "#fff"
 set ::bg "#6aa0d9" 
-#"#718497"
 set ::afg "#000"
 set ::abg "#708dab"
 
@@ -21,11 +20,12 @@ ttk::style map TMenuitem -background  [list pressed $::bg active $::abg] -foregr
 
 set ::menuBackground $bg
 set ::menuForeground $fg
-set ::wgeo "-5+20"
+set ::wgeo "-25+20"
 
 
 proc setWindowLabel { label } {
-    if {[winfo exists $::window_name]} {
+
+    if {[winfo exists $::window_name] == 1} {
         destroy $::window_name
         exit
     }
@@ -34,7 +34,6 @@ proc setWindowLabel { label } {
     toplevel $::window_name
     wm geometry $::window_name $::wgeo
     wm overrideredirect $::window_name 1
-    bind $::window_name <Escape> {exit}
 
     pack [ttk::label $::window_name.title -text [format "%50s" [padc $label 50]] -relief flat -padding "1 3 1 3"] -fill x
     bind $::window_name.title <Button-1> {exit}
