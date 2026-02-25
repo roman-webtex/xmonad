@@ -92,7 +92,7 @@ main = do
             , normalBorderColor  = "black"
             , workspaces         = myWorkspaces
             , layoutHook         = avoidStruts myLayout
-            , startupHook        = spawnOnce "feh --no-xinerama --bg-center /home/roman/Картинки/wall/269413-4096x1743.jpg"
+            , startupHook        = spawnOnce "~/.fehbg"
             , logHook            = dynamicLogWithPP $ xmobarPP
                 {
                     ppOutput = hPutStrLn xmproc

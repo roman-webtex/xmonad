@@ -3,23 +3,25 @@ package require apave
 package require uuid
 
 foreach font_name [font names] {
-    font configure $font_name -size 8
+    font configure $font_name -size 9 -family "Input Mono Condensed"
 }
 
-set fg "#fff"
-set bg "#5285cc"
-set afg "#000"
-set abg "#5260ee"
+set ::fg "#fff"
+set ::bg "#6aa0d9" 
+#"#718497"
+set ::afg "#000"
+set ::abg "#708dab"
 
-ttk::style configure TLabel -background $bg
-ttk::style configure TLabel -foreground $fg
-ttk::style configure TButton -background $bg
-ttk::style configure TButton -foreground $fg
-ttk::style map TButton -background  [list pressed $bg active $abg] -foreground  [list pressed $fg active $afg]
-ttk::style map TMenuitem -background  [list pressed $bg active $abg] -foreground  [list pressed $fg active $afg]
+ttk::style configure TLabel -background $::bg
+ttk::style configure TLabel -foreground $::fg
+ttk::style configure TButton -background $::bg
+ttk::style configure TButton -foreground $::fg
+ttk::style map TButton -background  [list pressed $::bg active $::abg] -foreground  [list pressed $::fg active $::afg]
+ttk::style map TMenuitem -background  [list pressed $::bg active $::abg] -foreground  [list pressed $::fg active $::afg]
 
 set ::menuBackground $bg
 set ::menuForeground $fg
+set ::wgeo "-5+20"
 
 
 proc setWindowLabel { label } {
@@ -30,11 +32,11 @@ proc setWindowLabel { label } {
 
     wm withdraw .
     toplevel $::window_name
-    wm geometry $::window_name -10+20
+    wm geometry $::window_name $::wgeo
     wm overrideredirect $::window_name 1
     bind $::window_name <Escape> {exit}
 
-    pack [ttk::label $::window_name.title -text [format "%50s" [padAll $label 50]] -relief flat] -fill x
+    pack [ttk::label $::window_name.title -text [format "%50s" [padc $label 50]] -relief flat -padding "1 3 1 3"] -fill x
     bind $::window_name.title <Button-1> {exit}
     update
 }
@@ -51,9 +53,9 @@ proc umountDisk { name } {
         exec udiskie-umount $name
     }
     # tcl/tk messagebox
-    #tk_messageBox -message "USB flash" -detail "Пристрій можна забрати." -icon info
+    #tk_messageBox -message "USB flash" -detail "Тепер пристрій можна витягнути" -icon info
     # unote message
-    exec echo "type=text,geometry=-5+20,padx=25,pady=25,duration=10,fg=fff,bg=5285ee,bd=000,text=|Пристрій можна витягнути" | nc localhost 7779 &
+    exec echo "type=text,geometry=$::wgeo,padx=25,pady=25,duration=7,fg=fff,bg=$::bg,text=|Тепер пристрій можна витягнути" | nc localhost 7779 &
     exit
 }
 
@@ -95,20 +97,17 @@ proc changeNet { ssid secur active} {
     exit
 }
 
-proc creaNetWindow {} {
-    set fp [open /tmp/connection.tmp]
-    set data [read $fp]
-    close $fp
-    #file delete /tmp/connection.tmp
-    set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/kgpg.png]]
-    
-    foreach child [pack slaves $::window_name] {
-        if {$child != "$::window_name.title"} {
-            pack forget $child
-            destroy $child
+proc creaDriveWindow { data } {
+    foreach line [split $data "\n"] {
+        if {[regexp -nocase "media" $line] == 1} {
+            pack [ttk::button $::window_name.lbl_$line -text [format "%-50s" $line] -command [list ::umountDisk "$line"]] -fill x
         }
     }
+}
 
+proc creaNetWindow { data } {
+    set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/kgpg.png]]
+    
     foreach line [split $data "\n"] {
         set parts [split $line ">"]
         if {[lindex $parts 0] != "IN-USE"} {
@@ -121,7 +120,7 @@ proc creaNetWindow {} {
                 set active " "
             }
             if {[string trim $SSID] != ""} {
-                pack [ttk::button $::window_name.lbl_$SSID -text [format "%-5s %-20s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
+                pack [ttk::button $::window_name.lbl_$SSID -text [format "%-5s %-25s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
                 if {[string trim $SECUR] != ""} {
                     $::window_name.lbl_$SSID configure -image $imgSecur -compound right
                 }
@@ -130,8 +129,31 @@ proc creaNetWindow {} {
     }
 }
 
-proc padAll {text length {fill " "} } {
+proc padc {text length {fill " "} } {
     set tlength [string length $text]
     set countAdd [expr {int (($length - $tlength) / 2)}]
     return [string repeat $fill $countAdd]$text[string repeat $fill $countAdd]
+}
+
+proc padl {text length {fill " "} } {
+    set tlength [string length $text]
+    set countAdd [expr {int ($length - $tlength)}]
+    return [string repeat $fill $countAdd]$text
+}
+
+proc padr {text length {fill " "} } {
+    set tlength [string length $text]
+    set countAdd [expr {int ($length - $tlength)}]
+    return $text[string repeat $fill $countAdd]
+}
+
+proc handleFileEvent { f prog} {
+    set status [catch { gets $f line } result]
+    if { $status != 0 } {
+        close $f
+    } elseif { $result >= 0 } {
+        $prog $line
+    } elseif { [eof $f] } {
+        close $f
+    }
 }

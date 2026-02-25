@@ -8,9 +8,6 @@ source $::workingDir/scripts/utils.tcl
 set ::window_name ".[::uuid::uuid generate]"
 
 ::setWindowLabel "Мережеві підключення"
-if {[file exists /tmp/connection.tmp]} {
-    ::creaNetWindow
-}
 
-exec nmcli dev wifi | sed -E "s/(\[\[:space:\]\]+)/>/g" > /tmp/connection.tmp
-::creaNetWindow
+set f [open "|nmcli dev wifi | sed -E \"s/(\[\[:space:\]\]+)/>/g\""] 
+fileevent $f readable [list ::handleFileEvent $f "::creaNetWindow"]

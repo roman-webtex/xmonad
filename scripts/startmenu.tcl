@@ -21,7 +21,7 @@ foreach line [split $data "\n"] {
         } else {
             image create photo $img -file [string trim $::workingDir/images/$::imgSize/applications-system.png]
         }
-        $::appmenu add command -label [lindex [split $line ":"] 0] -command [list ::runProg "[lindex [split $line ":"] 1]"] -image $img -compound left
+        $::appmenu add command -label [lindex [split $line ":"] 0] -command [list ::runProg "[lindex [split $line ":"] 1]"] -image $img -compound left -activebackground $::abg
     }
 }
 
