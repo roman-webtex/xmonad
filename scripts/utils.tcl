@@ -25,11 +25,6 @@ set ::wgeo "-25+20"
 
 proc setWindowLabel { label } {
 
-    if {[winfo exists $::window_name] == 1} {
-        destroy $::window_name
-        exit
-    }
-
     wm withdraw .
     toplevel $::window_name
     wm geometry $::window_name $::wgeo
@@ -99,7 +94,9 @@ proc changeNet { ssid secur active} {
 proc creaDriveWindow { data } {
     foreach line [split $data "\n"] {
         if {[regexp -nocase "media" $line] == 1} {
-            pack [ttk::button $::window_name.lbl_$line -text [format "%-50s" $line] -command [list ::umountDisk "$line"]] -fill x
+            set mnt [lindex [split $line] 0]
+            set nam [lindex [split $line] 2]
+            pack [ttk::button $::window_name.lbl_[::uuid::uuid generate] -text [format "%-50s" $nam] -command [list ::umountDisk "$mnt"]] -fill x
         }
     }
 }
@@ -119,9 +116,10 @@ proc creaNetWindow { data } {
                 set active " "
             }
             if {[string trim $SSID] != ""} {
-                pack [ttk::button $::window_name.lbl_$SSID -text [format "%-5s %-25s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
+                set w_id [::uuid::uuid generate]
+                pack [ttk::button $::window_name.lbl_$w_id -text [format "%-5s %-25s %-8s" $active $SSID $GRAPH] -command [list ::changeNet $SSID $SECUR $active]] -fill x
                 if {[string trim $SECUR] != ""} {
-                    $::window_name.lbl_$SSID configure -image $imgSecur -compound right
+                    $::window_name.lbl_$w_id configure -image $imgSecur -compound right
                 }
             }
         }

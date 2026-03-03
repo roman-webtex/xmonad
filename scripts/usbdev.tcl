@@ -7,5 +7,5 @@ set ::window_name ".[::uuid::uuid generate]"
 
 ::setWindowLabel "Підключені пристрої"
 
-set fp [open "| mount -l | awk \"{ print \$3 }\""]
+set fp [open "| mount -l "]
 fileevent $fp readable [list ::handleFileEvent $fp "::creaDriveWindow"]
