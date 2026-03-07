@@ -6,10 +6,10 @@ foreach font_name [font names] {
     font configure $font_name -size 9 -family "Input Mono Condensed"
 }
 
-set ::fg "#fff"
-set ::bg "#6aa0d9" 
+set ::fg "#000"
+set ::bg "#aeb8d5"
 set ::afg "#000"
-set ::abg "#708dab"
+set ::abg "#929cb5"
 
 ttk::style configure TLabel -background $::bg
 ttk::style configure TLabel -foreground $::fg
@@ -21,16 +21,28 @@ ttk::style map TMenuitem -background  [list pressed $::bg active $::abg] -foregr
 set ::menuBackground $bg
 set ::menuForeground $fg
 set ::wgeo "-25+20"
-
+set ::menuItem 0
 
 proc setWindowLabel { label } {
-
     wm withdraw .
     toplevel $::window_name
     wm geometry $::window_name $::wgeo
     wm overrideredirect $::window_name 1
 
     pack [ttk::label $::window_name.title -text [format "%50s" [padc $label 50]] -relief flat -padding "1 3 1 3"] -fill x
+    bind $::window_name.title <Button-1> {exit}
+    update
+}
+
+proc setEditWindowLabel { label } {
+    set ::text_name [::uuid::uuid generate]
+    wm withdraw .
+    toplevel $::window_name
+    wm geometry $::window_name $::wgeo
+    wm overrideredirect $::window_name 1
+
+    pack [ttk::label $::window_name.title -text [format "%70s" [padc $label 70]] -relief flat -padding "1 3 1 3"] -fill x
+    pack [text $::window_name.$::text_name -relief flat -wrap none -bg $::bg -fg $::fg] -fill both
     bind $::window_name.title <Button-1> {exit}
     update
 }
@@ -49,7 +61,7 @@ proc umountDisk { name } {
     # tcl/tk messagebox
     #tk_messageBox -message "USB flash" -detail "Тепер пристрій можна витягнути" -icon info
     # unote message
-    exec echo "type=text,geometry=$::wgeo,padx=25,pady=25,duration=7,fg=fff,bg=$::bg,text=|Тепер пристрій можна витягнути" | nc localhost 7779 &
+    exec echo "type=text,geometry=$::wgeo,padx=25,pady=25,duration=5,fg=$::fg,bg=$::bg,text=|Тепер пристрій можна витягнути" | nc localhost 7779 &
     exit
 }
 
@@ -96,13 +108,16 @@ proc creaDriveWindow { data } {
         if {[regexp -nocase "media" $line] == 1} {
             set mnt [lindex [split $line] 0]
             set nam [lindex [split $line] 2]
+            if {[string trim [lindex [split $line "\["] 1]] != ""} {
+               set nam [string trim [lindex [split $line "\["] 1] "\]"]
+            }
             pack [ttk::button $::window_name.lbl_[::uuid::uuid generate] -text [format "%-50s" $nam] -command [list ::umountDisk "$mnt"]] -fill x
         }
     }
 }
 
 proc creaNetWindow { data } {
-    set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/kgpg.png]]
+    set imgSecur [image create photo img_Secur -file [string trim $::workingDir/images/$::imgSize/wifi-lock.png]]
     
     foreach line [split $data "\n"] {
         set parts [split $line ">"]
@@ -124,6 +139,14 @@ proc creaNetWindow { data } {
             }
         }
     }
+}
+
+proc goBottom {} {
+    $::appmenu activate [incr ::menuItem]
+}
+
+proc creaDFWindow { data } {
+   $::window_name.$::text_name insert end "$data\n"
 }
 
 proc padc {text length {fill " "} } {

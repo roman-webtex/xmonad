@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#tclsh /home/roman/.xmonad/scripts/ddshow.tcl
+#exit 0
+
 PID=`ps aux | grep DfShow | grep -v grep | awk '{print $2}'`
 
 if [[ -n $PID ]]; then

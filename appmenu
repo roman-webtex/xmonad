@@ -1,13 +1,18 @@
+Система:>:applications-utilities.png
 Terminal:urxvt:utilities-terminal.png
-Nemo:nemo:system-file-manager.png
-
+Nemo:nemo:utilities-file-manager.png
+:<:
+Інтернет:>:applications-internet.png
 Google Chrome:google-chrome:google-chrome.png
-
-Office:/opt/libreoffice26.2/program/soffice:lx03162.png
-Office Calc:/opt/libreoffice26.2/program/scalc:ots.png
-Office Writer:/opt/libreoffice26.2/program/swriter:odt.png
-TexStudio:texstudio.AppImage:accessories-text-editor.png
-Scribus:scribus:scribus.png
-
+:<:
+Офіс:>:applications-office.png
+Office:/opt/libreoffice26.2/program/soffice:libreoffice-startcenter.png
+Office Calc:/opt/libreoffice26.2/program/scalc:libreoffice-calc.png
+Office Writer:/opt/libreoffice26.2/program/swriter:libreoffice-writer.png
+TexStudio:texstudio.AppImage:office-tex.png
+Scribus:scribus:applications-scribus.png
+:<:
+Графіка:>:applications-graphics.png
 Gimp:gimp:gimp-wilber.png
 Inkscape:Inkscape.AppImage:inkscape.png
+:<:
